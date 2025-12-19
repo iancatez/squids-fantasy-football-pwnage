@@ -10,8 +10,13 @@ A comprehensive fantasy football prediction and data analysis tool built with Py
   - Rosters, schedules, injuries
   - Draft picks and contracts
   - Play-by-play data (optional)
+- **Fantasy Predictions**: Statistical algorithm for predicting 2026 fantasy performance
+  - Weighted recent performance analysis
+  - Trend detection (improving/declining players)
+  - Consistency scoring
+  - Position-specific filtering
 - **Machine Learning Ready**: Structured data output in Parquet format optimized for ML workflows
-- **Configurable**: JSON-based configuration for all data fetching parameters
+- **Configurable**: JSON-based configuration for all modules
 - **Efficient Caching**: Built-in caching to minimize redundant downloads
 
 ## Project Structure
@@ -19,15 +24,29 @@ A comprehensive fantasy football prediction and data analysis tool built with Py
 ```
 squids-fantasy-football-pwnage/
 ├── src/
-│   └── pwn-fantasy-football/
+│   └── pwn_fantasy_football/
 │       ├── data_fetch/          # Data fetching module
 │       │   ├── cfg/             # Configuration files
-│       │   ├── data_fetcher.py # Main data fetching class
+│       │   ├── data_fetcher.py  # Main data fetching class
 │       │   ├── utils.py         # Utility functions
 │       │   ├── main.py          # CLI interface
+│       │   ├── example_usage.py # Usage examples
 │       │   └── README.md        # Detailed data_fetch documentation
-│       └── prediction/          # ML prediction module (coming soon)
-│           └── cfg/             # Prediction configuration
+│       └── prediction/          # Prediction module
+│           ├── cfg/             # Prediction configuration
+│           ├── predictor.py      # Main prediction algorithm
+│           ├── fantasy_calculator.py # Fantasy point calculator
+│           ├── main.py          # CLI interface
+│           ├── example_usage.py # Usage examples
+│           └── README.md        # Detailed prediction documentation
+├── src/tests/                   # Test suite
+│   ├── test_utils.py
+│   ├── test_data_fetcher.py
+│   ├── test_main.py
+│   └── README.md
+├── data_output/                 # Fetched data (generated)
+├── data_cache/                  # Cache directory (generated)
+├── predictions/                 # Prediction outputs (generated)
 ├── requirements.txt             # Python dependencies
 ├── pyproject.toml               # Project configuration
 └── README.md                    # This file
@@ -103,7 +122,7 @@ All data fetching parameters are configured in `src/pwn-fantasy-football/data_fe
 - **Caching**: Configure cache directory and duration
 - **Output Directory**: Where to save fetched data
 
-See [data_fetch/README.md](src/pwn-fantasy-football/data_fetch/README.md) for detailed configuration documentation.
+See [data_fetch/README.md](src/pwn_fantasy_football/data_fetch/README.md) for detailed configuration documentation.
 
 ## Available Data Types
 
@@ -165,7 +184,27 @@ Comprehensive NFL data fetching system. See [data_fetch/README.md](src/pwn-fanta
 
 ### Prediction (`prediction/`)
 
-Machine learning prediction module (coming soon).
+Statistical fantasy football prediction system. See [prediction/README.md](src/pwn_fantasy_football/prediction/README.md) for complete documentation.
+
+**Key Features:**
+- Multi-factor prediction algorithm (weighted averages, trends, consistency)
+- Standard fantasy scoring (configurable)
+- Position filtering (QB, RB, WR, TE)
+- Comprehensive output with detailed metrics
+
+**Quick Example:**
+```python
+from pwn_fantasy_football.prediction import FantasyPredictor
+
+predictor = FantasyPredictor()
+predictions_df = predictor.predict_all_players()
+top_20 = predictor.get_top_players(predictions_df, n=20)
+```
+
+Or via CLI:
+```bash
+python src/pwn_fantasy_football/prediction/main.py --top-n 30 --position QB
+```
 
 ## Development
 
@@ -239,6 +278,25 @@ fetcher = NFLDataFetcher(config_path=custom_config)
 fetcher.fetch_all()
 ```
 
+### Example 4: Generate Fantasy Predictions
+
+```python
+from pwn_fantasy_football.prediction import FantasyPredictor
+
+# Generate predictions for 2026 season
+predictor = FantasyPredictor()
+predictions_df = predictor.predict_all_players()
+
+# Get top 20 players
+top_20 = predictor.get_top_players(predictions_df, n=20)
+
+# Filter by position
+qbs = predictions_df.filter(predictions_df["position"] == "QB").head(10)
+
+# Save predictions
+output_path = predictor.save_predictions(predictions_df)
+```
+
 ## Performance Tips
 
 1. **Start Small**: Test with a few seasons before fetching all historical data
@@ -260,7 +318,9 @@ fetcher.fetch_all()
 **Issue**: Slow downloads
 - **Solution**: Enable caching, reduce season range, or fetch during off-peak hours.
 
-For more troubleshooting help, see [data_fetch/README.md](src/pwn-fantasy-football/data_fetch/README.md).
+For more troubleshooting help, see:
+- [data_fetch/README.md](src/pwn_fantasy_football/data_fetch/README.md) for data fetching issues
+- [prediction/README.md](src/pwn_fantasy_football/prediction/README.md) for prediction issues
 
 ## Contributing
 
@@ -282,16 +342,21 @@ Ian Cates
 ## Roadmap
 
 - [x] Data fetching module
-- [ ] ML prediction models
+- [x] Statistical prediction algorithm
+- [ ] Machine learning prediction models
 - [ ] Feature engineering utilities
 - [ ] Model evaluation tools
+- [ ] Advanced analytics (schedule strength, matchups)
 - [ ] Web interface (optional)
 
 ## Support
 
 For questions or issues:
-1. Check the [data_fetch README](src/pwn-fantasy-football/data_fetch/README.md) for detailed documentation
-2. Review the example usage files
+1. Check the module-specific READMEs:
+   - [data_fetch README](src/pwn_fantasy_football/data_fetch/README.md)
+   - [prediction README](src/pwn_fantasy_football/prediction/README.md)
+   - [tests README](src/tests/README.md)
+2. Review the example usage files in each module
 3. Open an issue on GitHub
 
 ---

@@ -1,17 +1,22 @@
 # Tests
 
-This directory contains comprehensive tests for the `pwn-fantasy-football` project.
+This directory contains comprehensive tests for the `pwn_fantasy_football` project.
 
 ## Test Structure
 
 ```
-tests/
+src/tests/
 ├── conftest.py           # Shared fixtures and test configuration
 ├── test_utils.py         # Tests for utility functions
 ├── test_data_fetcher.py  # Tests for NFLDataFetcher class
 ├── test_main.py          # Tests for CLI interface
 └── README.md            # This file
 ```
+
+## Modules Tested
+
+- **data_fetch**: Data fetching utilities and NFLDataFetcher class
+- **prediction**: (Tests coming soon)
 
 ## Running Tests
 

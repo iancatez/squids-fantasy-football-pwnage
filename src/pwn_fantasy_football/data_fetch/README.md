@@ -267,6 +267,24 @@ The module includes comprehensive error handling:
 
 All dependencies are listed in the project's `requirements.txt`.
 
+## Integration with Prediction Module
+
+The data fetched by this module is used by the `prediction` module to generate fantasy football predictions. After fetching player statistics:
+
+```python
+from pwn_fantasy_football.data_fetch import fetch_all_data
+from pwn_fantasy_football.prediction import FantasyPredictor
+
+# Fetch data
+fetch_all_data()
+
+# Generate predictions
+predictor = FantasyPredictor()
+predictions_df = predictor.predict_all_players()
+```
+
+The prediction module expects player statistics in `data_output/player_stats/player_stats.parquet` by default.
+
 ## Troubleshooting
 
 ### Issue: Function not found in nflreadpy
