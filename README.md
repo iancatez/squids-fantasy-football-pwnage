@@ -72,9 +72,38 @@ pip install -e .
 
 ## Quick Start
 
-### Fetching NFL Data
+### Unified Interface (Recommended)
 
-The easiest way to get started is to fetch all available NFL data:
+The easiest way to get started is using the unified CMDlet-style interface that automatically handles data fetching and predictions:
+
+```python
+from pwn_fantasy_football import predict_fantasy_players
+
+# Get top 30 players for 2026 season
+# Automatically fetches data if needed or if cache is stale
+results = predict_fantasy_players(
+    top_n=30,
+    position="QB",  # Optional: QB, RB, WR, TE, or None for all
+    target_season=2026
+)
+
+# Display results
+print(results['top_players'])
+print(f"Processing time: {results['summary']['processing_time_seconds']}s")
+```
+
+Or use the quick convenience function:
+
+```python
+from pwn_fantasy_football import quick_predict
+
+# Quick top 20 QBs
+results = quick_predict(top_n=20, position="QB")
+```
+
+### Fetching NFL Data (Manual)
+
+If you want to fetch data separately:
 
 ```python
 from pwn_fantasy_football.data_fetch import fetch_all_data
@@ -108,8 +137,8 @@ You can also use the CLI:
 # Fetch all data
 python -m pwn_fantasy_football.data_fetch.main --data-type all
 
-# Fetch only player stats for specific seasons
-python -m pwn_fantasy_football.data_fetch.main --data-type player_stats --seasons 2022 2023
+# Generate predictions
+python src/pwn_fantasy_football/prediction/main.py --top-n 30 --position QB
 ```
 
 ## Configuration
@@ -169,11 +198,39 @@ print(df.head())
 print(df.schema)
 ```
 
+## Unified Interface
+
+The main package provides a unified CMDlet-style interface that automatically handles data fetching and predictions:
+
+```python
+from pwn_fantasy_football import predict_fantasy_players
+
+# Automatically checks cache, fetches if needed, then predicts
+results = predict_fantasy_players(
+    top_n=30,
+    position="QB",
+    target_season=2026,
+    cache_duration_hours=24  # Refresh if data older than 24 hours
+)
+
+# Access results
+print(results['top_players'])
+print(f"Processing time: {results['summary']['processing_time_seconds']}s")
+```
+
+**Key Features:**
+- **Automatic Data Management**: Checks if data exists and is fresh
+- **Smart Caching**: Only fetches if data is missing or stale
+- **Single Function Call**: Handles everything from data fetching to predictions
+- **Flexible Configuration**: Supports all prediction and data fetch options
+
+See the [example_usage.py](src/pwn_fantasy_football/example_usage.py) file for more examples.
+
 ## Modules
 
 ### Data Fetch (`data_fetch/`)
 
-Comprehensive NFL data fetching system. See [data_fetch/README.md](src/pwn-fantasy-football/data_fetch/README.md) for complete documentation.
+Comprehensive NFL data fetching system. See [data_fetch/README.md](src/pwn_fantasy_football/data_fetch/README.md) for complete documentation.
 
 **Key Features:**
 - Multiple data types support
