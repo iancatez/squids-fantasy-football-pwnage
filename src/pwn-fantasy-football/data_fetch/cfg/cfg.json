@@ -1,0 +1,74 @@
+{
+  "seasons": {
+    "start_year": 2010,
+    "end_year": 2024,
+    "include_current": true
+  },
+  "data_types": {
+    "player_stats": {
+      "enabled": true,
+      "format": "parquet",
+      "include_advanced": true
+    },
+    "player_seasonal": {
+      "enabled": true,
+      "format": "parquet"
+    },
+    "player_weekly": {
+      "enabled": true,
+      "format": "parquet"
+    },
+    "team_stats": {
+      "enabled": true,
+      "format": "parquet"
+    },
+    "play_by_play": {
+      "enabled": false,
+      "format": "parquet",
+      "note": "Large dataset, enable only if needed"
+    },
+    "rosters": {
+      "enabled": true,
+      "format": "parquet"
+    },
+    "schedules": {
+      "enabled": true,
+      "format": "parquet"
+    },
+    "injuries": {
+      "enabled": true,
+      "format": "parquet"
+    },
+    "draft_picks": {
+      "enabled": true,
+      "format": "parquet"
+    },
+    "contracts": {
+      "enabled": true,
+      "format": "parquet"
+    }
+  },
+  "cache": {
+    "mode": "filesystem",
+    "directory": "./data_cache",
+    "duration": 86400,
+    "verbose": true
+  },
+  "output": {
+    "directory": "./data_output",
+    "format": "parquet",
+    "create_subdirectories": true,
+    "compression": "snappy"
+  },
+  "http": {
+    "timeout": 30,
+    "user_agent": "pwn-fantasy-football/0.1.0"
+  },
+  "processing": {
+    "chunk_size": 1000,
+    "parallel_downloads": false,
+    "max_retries": 3,
+    "retry_delay": 5
+  }
+}
+
