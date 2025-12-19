@@ -1,7 +1,16 @@
 """Example usage of the NFL data fetcher."""
 
+import sys
 from pathlib import Path
-from .data_fetcher import NFLDataFetcher, fetch_all_data
+
+# Add src directory to path to allow running directly without installing the package
+# Path structure: src/pwn_fantasy_football/data_fetch/example_usage.py
+# We need to go up 3 levels to get to src/
+src_dir = Path(__file__).resolve().parent.parent.parent
+if src_dir.exists() and str(src_dir) not in sys.path:
+    sys.path.insert(0, str(src_dir))
+
+from pwn_fantasy_football.data_fetch import NFLDataFetcher, fetch_all_data
 
 
 def example_basic_usage():
