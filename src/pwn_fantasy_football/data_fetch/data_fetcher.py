@@ -50,9 +50,14 @@ class NFLDataFetcher:
         cache_config = self.config.get("cache", {})
         http_config = self.config.get("http", {})
         
+        # Convert cache_dir to Path object if it's a string
+        cache_dir = cache_config.get("directory", "./data_cache")
+        if isinstance(cache_dir, str):
+            cache_dir = Path(cache_dir)
+        
         update_config(
             cache_mode=cache_config.get("mode", "filesystem"),
-            cache_dir=cache_config.get("directory", "./data_cache"),
+            cache_dir=cache_dir,
             cache_duration=cache_config.get("duration", 86400),
             verbose=cache_config.get("verbose", True),
             timeout=http_config.get("timeout", 30),
@@ -379,11 +384,12 @@ class NFLDataFetcher:
             logger.info("contracts is disabled in config, skipping...")
             return
         
-        logger.info(f"Fetching contracts for seasons: {seasons}")
+        logger.info("Fetching contracts...")
         
         try:
             if hasattr(nfl, "load_contracts"):
-                df = nfl.load_contracts(seasons)
+                # load_contracts() doesn't take seasons parameter
+                df = nfl.load_contracts()
             else:
                 logger.warning("load_contracts not available in nflreadpy, skipping...")
                 return
