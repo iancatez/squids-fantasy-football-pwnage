@@ -1,0 +1,41 @@
+{
+  "data": {
+    "data_output_dir": "./data_output",
+    "data_cache_dir": "./data_cache",
+    "use_cache": true
+  },
+  "scoring": {
+    "format": "standard",
+    "passing_yards": 0.04,
+    "passing_tds": 4,
+    "interceptions": -2,
+    "rushing_yards": 0.1,
+    "rushing_tds": 6,
+    "receptions": 0.5,
+    "receiving_yards": 0.1,
+    "receiving_tds": 6,
+    "fumbles_lost": -2,
+    "two_point_conversions": 2
+  },
+  "prediction": {
+    "target_season": 2026,
+    "min_seasons_played": 2,
+    "recent_seasons_weight": 1.5,
+    "trend_weight": 0.3,
+    "consistency_weight": 0.2,
+    "age_factor": true,
+    "position_filters": {
+      "QB": true,
+      "RB": true,
+      "WR": true,
+      "TE": true
+    }
+  },
+  "output": {
+    "directory": "./predictions",
+    "format": "parquet",
+    "top_n_players": 50,
+    "include_breakdown": true
+  }
+}
+
