@@ -60,6 +60,9 @@ dev = [
     "mypy>=1.0.0",
 ]
 
+[project.scripts]
+fantasy-predict = "pwn_fantasy_football.cli:main"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
