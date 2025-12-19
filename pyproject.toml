@@ -9,6 +9,7 @@ description = "Fantasy football prediction and data fetching tool"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
+# Note: Using deprecated license format for compatibility. Will update to SPDX expression in future.
 authors = [
     {name = "Ian Cates"}
 ]
